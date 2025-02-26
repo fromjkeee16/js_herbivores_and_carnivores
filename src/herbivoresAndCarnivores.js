@@ -23,16 +23,12 @@ class Carnivore extends Animal {
   static DAMAGE = 50;
 
   bite(target) {
-    if (target.hidden || target instanceof Carnivore) {
-      return;
-    }
+    if (!target.hidden && target instanceof Herbivore) {
+      target.health -= Carnivore.DAMAGE;
 
-    target.health -= Carnivore.DAMAGE;
-
-    if (target.health <= 0) {
-      const index = Animal.alive.indexOf(target);
-
-      Animal.alive.splice(index, 1);
+      if (target.health <= 0) {
+        Animal.alive = Animal.alive.filter((animal) => animal !== target);
+      }
     }
   }
 }
